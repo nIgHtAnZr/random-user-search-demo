@@ -29,5 +29,7 @@ Then open http://localhost:3000/ in  browser.
 
 ## Version History
 
-* 0.1
+* 1.0.0
     * Initial Release
+* 1.0.1
+    * Multi language support (internationalization) added.
