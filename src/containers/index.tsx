@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
 import { Spinner } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import LanguageSelector from '../components/LanguageSelector';
 import LoadingSpinner from '../components/loader/LoadingSpinner';
 import UserView from '../components/userView';
 import useApi from '../hooks/useApi';
@@ -16,6 +18,12 @@ import {
 import { UsersState } from '../redux/reducers/userReducer';
 
 const UserSearch = () => {
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (languageCode: string) => {
+    i18n.changeLanguage(languageCode);
+  };
+
   const userData = useSelector<UsersState, UsersState>(state => state);
   const [fetchUserDataApi] = useApi();
   const [fetchUsersAgeApi] = useApi();
@@ -78,15 +86,24 @@ const UserSearch = () => {
               onClick={() => fetchUserData()}
               disabled={usersDataLoading || ageForUsersLoading}
             >
-              Search Random People
+              {t('Search Random People')}
             </button>
             <button
+              className="mr-2"
               onClick={() => fetchUsersAge()}
               disabled={
                 !usersData?.length || usersDataLoading || ageForUsersLoading
               }
             >
-              Calculate Age
+              {t('Calculate Age')}
+            </button>
+            <button
+              onClick={() => clearSearch()}
+              disabled={
+                !usersData?.length || usersDataLoading || ageForUsersLoading
+              }
+            >
+              {t('Clear')}
             </button>
             {ageForUsersLoading && (
               <span className="ml-2">
@@ -95,14 +112,11 @@ const UserSearch = () => {
             )}
           </div>
           <div className="float-right">
-            <button
-              onClick={() => clearSearch()}
-              disabled={
-                !usersData?.length || usersDataLoading || ageForUsersLoading
+            <LanguageSelector
+              changeLanguage={(languageCode: string) =>
+                changeLanguage(languageCode)
               }
-            >
-              Clear
-            </button>
+            />
           </div>
         </div>
       </div>

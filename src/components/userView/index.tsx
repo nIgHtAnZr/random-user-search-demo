@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Card, Col, Image } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 interface UserViewProps {
   firstName: string;
@@ -18,15 +19,23 @@ const UserView: FC<UserViewProps> = ({
   imageUrl,
   age,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Col xs={4}>
       <Card>
         <Image src={imageUrl} />
         <Card.Body>
-          <Card.Text>{`Name: ${firstName} ${lastName}`}</Card.Text>
-          <Card.Text>City: {city}</Card.Text>
-          <Card.Text>Dob: {dob}</Card.Text>
-          <Card.Text>Age: {age}</Card.Text>
+          <Card.Text>{`${t('Name')}: ${firstName} ${lastName}`}</Card.Text>
+          <Card.Text>
+            {t('City')}: {city}
+          </Card.Text>
+          <Card.Text>
+            {t('Dob')}: {dob}
+          </Card.Text>
+          <Card.Text>
+            {t('Age')}: {age}
+          </Card.Text>
         </Card.Body>
       </Card>
     </Col>
